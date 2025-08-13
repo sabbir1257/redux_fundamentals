@@ -21,6 +21,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, post: state.post + action.payload };
     case DECREASE_BY:
       return { ...state, post: state.post - action.payload };
+    default:
+      return state;
   }
 };
 

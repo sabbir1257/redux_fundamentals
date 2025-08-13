@@ -699,6 +699,8 @@ const reducer = (state = initialState, action)=>{
                 ...state,
                 post: state.post - action.payload
             };
+        default:
+            return state;
     }
 };
 const store = (0, _redux.createStore)(reducer);
