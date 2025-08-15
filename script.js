@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+const postCountElement = document.querySelector('.post-count');
 
 const initialState = {
   post: 0,
@@ -26,15 +27,27 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-const store = createStore(reducer);
-
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
 console.log(store);
 
-store.subscribe(() => {
+const unsubscribe = store.subscribe(() => {
   console.log(store.getState());
+  postCountElement.innerText = store.getState().post;
 });
+
+postCountElement.innerText = store.getState().post;
 
 store.dispatch({ type: INCREMENT });
 store.dispatch({ type: DECREMENT });
 store.dispatch({ type: INCREASE_BY, payload: 15 });
-store.dispatch({ type: DECREASE_BY, payload: 15 });
+store.dispatch({ type: DECREASE_BY, payload: 5 });
+
+// unsubscribe();
+
+// setTimeout(() => {
+//   store.dispatch({type: DECREMENT})
+// }, 2000)
+
+postCountElement.addEventListener('click', () => {
+  store.dispatch({ type: INCREMENT });
+});

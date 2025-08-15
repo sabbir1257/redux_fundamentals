@@ -668,6 +668,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"kTBnD":[function(require,module,exports,__globalThis) {
 var _redux = require("redux");
+const postCountElement = document.querySelector('.post-count');
 const initialState = {
     post: 0,
     name: 'Sabbir Sarker',
@@ -703,11 +704,13 @@ const reducer = (state = initialState, action)=>{
             return state;
     }
 };
-const store = (0, _redux.createStore)(reducer);
+const store = (0, _redux.createStore)(reducer, window.__REDUX_DEVTOOLS_EXTENSION__?.());
 console.log(store);
-store.subscribe(()=>{
+const unsubscribe = store.subscribe(()=>{
     console.log(store.getState());
+    postCountElement.innerText = store.getState().post;
 });
+postCountElement.innerText = store.getState().post;
 store.dispatch({
     type: INCREMENT
 });
@@ -720,7 +723,16 @@ store.dispatch({
 });
 store.dispatch({
     type: DECREASE_BY,
-    payload: 15
+    payload: 5
+});
+// unsubscribe();
+// setTimeout(() => {
+//   store.dispatch({type: DECREMENT})
+// }, 2000)
+postCountElement.addEventListener('click', ()=>{
+    store.dispatch({
+        type: INCREMENT
+    });
 });
 
 },{"redux":"7RvxM"}],"7RvxM":[function(require,module,exports,__globalThis) {
